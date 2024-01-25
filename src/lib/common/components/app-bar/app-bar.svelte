@@ -72,13 +72,19 @@ function setActive(title: string) {
     active = title;
 }
 
-export let user: User = null!;
+const user: User = {
+    id: 2, 
+    nickName: 'andy69',
+    avatarUrl: '',
+} 
 
 let topAppBar: TopAppBar = null!
 
 const pages: Record<'title' | 'url', string>[] = [
     { title: 'Вход', url: '/auth/login' },
     { title: 'Записки', url: '/notes' },
+    { title: 'Создать записку', url: '/notes/new' },
     { title: 'Профиль', url: '/user' },
+    { title: 'Index', url: '/' },
 ] as const
 </script>

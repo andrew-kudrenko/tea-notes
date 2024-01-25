@@ -1,16 +1,25 @@
 import ky from 'ky';
 
-import type { RefreshResponse } from '$lib/auth/types/auth.types';
+import { API_URL, api } from '$lib/api/api';
+import type { LoginRequestPayload, RefreshResponse } from '../types/auth.types';
 
-const API_URL = 'http://localhost:5291/api/';
+export function login(payload: LoginRequestPayload) {
+	return api.post('auth/login', { json: payload });
+}
 
-export const api = ky.create({
-	prefixUrl: API_URL,
-	credentials: 'include',
-	hooks: { beforeRequest: [updateTokens, updateAuthorizationHeader] }
-});
+export async function logout() {
+	try {
+		await api.post('auth/logout');
+	} finally {
+		localStorage.removeItem(LocalStorage.AccessToken);
+		localStorage.removeItem(LocalStorage.AccessTokenExpiresAt);
 
-async function updateTokens() {
+		localStorage.removeItem(LocalStorage.RefreshToken);
+		localStorage.removeItem(LocalStorage.RefreshTokenExpiresAt);
+	}
+}
+
+export async function updateTokens() {
 	const accessToken = localStorage.getItem(LocalStorage.AccessToken);
 	const accessExpiresAt = localStorage.getItem(LocalStorage.AccessTokenExpiresAt);
 
@@ -25,7 +34,7 @@ async function updateTokens() {
 	}
 }
 
-function updateAuthorizationHeader(request: Request): void {
+export function updateAuthorizationHeader(request: Request): void {
 	const token = localStorage.getItem(LocalStorage.AccessToken);
 
 	if (token) {

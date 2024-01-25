@@ -31,7 +31,7 @@ export interface TeaNoteInfusion {
 	density: number;
 }
 
-export const EMPTY_INFUSION: DeepEmpty<TeaNoteInfusion> = {
+export const EMPTY_INFUSION = {
 	appearance: '',
 	aroma: '',
 	taste: '',
@@ -42,4 +42,4 @@ export const EMPTY_INFUSION: DeepEmpty<TeaNoteInfusion> = {
 	extractivity: null,
 	tartness: null,
 	viscosity: null
-} as const;
+} as const satisfies DeepEmpty<TeaNoteInfusion>;

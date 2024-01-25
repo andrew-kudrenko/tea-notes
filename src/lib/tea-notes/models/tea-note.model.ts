@@ -1,5 +1,3 @@
-import type { DeepEmptyOmit } from '$lib/common/types/utility.types';
-
 import type { TeaNoteGeneralInfo } from './general-info.model';
 import type { TeaNoteBrewing } from './brewing.model';
 import type { TeaNoteAftertaste } from './aftertaste.model';
@@ -29,7 +27,7 @@ export function getEmptyTeaNote() {
 		general: { ...EMPTY_GENERAL_INFO },
 		brewing: { ...EMPTY_BREWING },
 		dryLeaf: { ...EMPTY_DRY_LEAF },
-		infusion: { ...EMPTY_INFUSION } as DeepEmptyOmit<TeaNoteInfusion, 'tastes'>,
+		infusion: { ...EMPTY_INFUSION },
 		aftertaste: { ...EMPTY_AFTERTASTE },
 		impression: { ...EMPTY_IMPRESSION }
 	};

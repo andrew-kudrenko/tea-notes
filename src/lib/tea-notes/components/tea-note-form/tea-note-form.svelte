@@ -38,6 +38,12 @@
           <hr />
           <ImpressionForm impression={note.impression} />
         </Cell>
+
+        <Cell span={12}>
+          <Button on:click={() => dispatch('save', note)} variant="outlined">
+            <Label>Сохранить</Label>
+          </Button>
+        </Cell>
       </LayoutGrid>
   </Paper>
 </form>
@@ -53,8 +59,11 @@
 </style>
 
 <script lang=ts>
+	import { createEventDispatcher } from 'svelte';
+
   import LayoutGrid, { Cell } from '@smui/layout-grid'
   import Paper from '@smui/paper'
+  import Button, { Label } from '@smui/button'
   
   import GeneralInfoForm from '$lib/tea-notes/components/tea-note-form/general-info-form.svelte'
   import BrewingForm from '$lib/tea-notes/components/brewing-form/brewing-form.svelte'
@@ -65,4 +74,6 @@
 	import type { EmptyTeaNote } from '$lib/tea-notes/models/tea-note.model';
 
   export let note: EmptyTeaNote = null!
+
+  const dispatch = createEventDispatcher()
 </script>

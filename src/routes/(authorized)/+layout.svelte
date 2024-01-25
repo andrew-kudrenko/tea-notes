@@ -1,4 +1,4 @@
-<AppBar {user}>
+<AppBar>
     <div class="app">
         <slot />
     </div>
@@ -18,12 +18,4 @@
 
 <script lang=ts>
     import AppBar from '$lib/common/components/app-bar/app-bar.svelte';
-
-    import type { User } from '$lib/user/types/user.types';
-
-    const user: User = {
-        id: 2, 
-        nickName: 'andy69',
-        avatarUrl: '',
-    } 
 </script>
