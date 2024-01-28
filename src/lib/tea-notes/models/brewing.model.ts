@@ -4,6 +4,7 @@ export const enum TeaDishware {
 	Teapot = 'teapot',
 	Gaiwan = 'gaiwan',
 	Cup = 'cup',
+	Thermos = 'thermos',
 	Other = 'other'
 }
 
@@ -34,6 +35,7 @@ export const DISHWARES: Record<TeaDishware, string> = {
 	[TeaDishware.Teapot]: 'Чайник',
 	[TeaDishware.Gaiwan]: 'Гайвань',
 	[TeaDishware.Cup]: 'Кружка',
+	[TeaDishware.Thermos]: 'Термос',
 	[TeaDishware.Other]: 'Другое'
 } as const;
 

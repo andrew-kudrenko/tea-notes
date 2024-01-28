@@ -1,10 +1,16 @@
 import ky from 'ky';
 
-import { API_URL, api } from '$lib/api/api';
-import type { LoginRequestPayload, RefreshResponse } from '../types/auth.types';
+import { API_URL, api } from '$lib/common/api/api';
+import type {
+	AuthTokens,
+	LoginRequestPayload,
+	LoginResponse,
+	RefreshResponse
+} from '../types/auth.types';
 
-export function login(payload: LoginRequestPayload) {
-	return api.post('auth/login', { json: payload });
+export async function login(payload: LoginRequestPayload) {
+	const { tokens } = await api.post('auth/login', { json: payload }).json<LoginResponse>();
+	setTokens(tokens);
 }
 
 export async function logout() {
@@ -19,18 +25,19 @@ export async function logout() {
 	}
 }
 
-export async function updateTokens() {
-	const accessToken = localStorage.getItem(LocalStorage.AccessToken);
-	const accessExpiresAt = localStorage.getItem(LocalStorage.AccessTokenExpiresAt);
+export function isRefreshTokenRelevant() {
+	const expiresAt = localStorage.getItem(LocalStorage.RefreshTokenExpiresAt);
+	return expiresAt && isTokenRelevant(expiresAt);
+}
 
-	if (accessToken && accessExpiresAt && !isTokenRelevant(accessExpiresAt)) {
-		const { tokens } = await requestRefreshTokens();
+export async function tryUpdateTokens() {
+	try {
+		const { tokens } = await fetchRefreshedTokens();
+		setTokens(tokens);
 
-		localStorage.setItem(LocalStorage.AccessToken, tokens.access.token);
-		localStorage.setItem(LocalStorage.AccessTokenExpiresAt, tokens.access.expiresAt);
-
-		localStorage.setItem(LocalStorage.RefreshToken, tokens.refresh.token);
-		localStorage.setItem(LocalStorage.RefreshTokenExpiresAt, tokens.refresh.expiresAt);
+		return true;
+	} catch {
+		return false;
 	}
 }
 
@@ -42,21 +49,28 @@ export function updateAuthorizationHeader(request: Request): void {
 	}
 }
 
+function setTokens(tokens: AuthTokens) {
+	localStorage.setItem(LocalStorage.AccessToken, tokens.access.token);
+	localStorage.setItem(LocalStorage.AccessTokenExpiresAt, tokens.access.expiresAt);
+
+	localStorage.setItem(LocalStorage.RefreshToken, tokens.refresh.token);
+	localStorage.setItem(LocalStorage.RefreshTokenExpiresAt, tokens.refresh.expiresAt);
+}
+
 function isTokenRelevant(expiresAt: string): boolean {
 	return Date.now() < new Date(expiresAt).getTime();
 }
 
-async function requestRefreshTokens(): Promise<RefreshResponse> {
+function fetchRefreshedTokens(): Promise<RefreshResponse> {
 	return ky
 		.post('auth/refresh', {
 			credentials: 'include',
-			prefixUrl: API_URL,
-			retry: { limit: 3, maxRetryAfter: 3_000 }
+			prefixUrl: API_URL
 		})
 		.json<RefreshResponse>();
 }
 
-enum LocalStorage {
+const enum LocalStorage {
 	AccessToken = 'accessToken',
 	AccessTokenExpiresAt = 'accessTokenExpiresAt',
 	RefreshToken = 'refreshToken',

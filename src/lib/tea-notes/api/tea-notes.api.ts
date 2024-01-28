@@ -1,8 +1,8 @@
-import { api } from '$lib/api/api';
+import { api } from '$lib/common/api/api';
 
 import type { EmptyTeaNote, TeaNote } from '../models/tea-note.model';
 
-const TEA_NOTES_ENDPOINT = 'notes';
+export const TEA_NOTES_ENDPOINT = 'notes';
 
 export function fetchNotes() {
 	return api.get(TEA_NOTES_ENDPOINT).json<TeaNote[]>();
