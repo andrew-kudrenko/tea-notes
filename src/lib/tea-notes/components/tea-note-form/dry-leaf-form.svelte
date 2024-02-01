@@ -9,26 +9,24 @@
 </script>
 
 <InnerGrid>
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
 		<Textfield
-			bind:value={dryLeaf.appearance}
 			textarea
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
+			bind:value={dryLeaf.appearance}
 			label="Внешний вид"
-			input$rows={3}
+			input$cols={100}
+			input$rows={6}
 			input$resizable={false}
 		/>
 	</Cell>
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
 		<Textfield
 			bind:value={dryLeaf.aroma}
-			textarea
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
 			label="Аромат"
-			input$rows={3}
-			input$resizable={false}
+			textarea
+			input$cols={100}
+			input$rows={6}
+			input$resizable={false}			
 		/>
 	</Cell>
 </InnerGrid>

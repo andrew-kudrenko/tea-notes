@@ -7,10 +7,10 @@
 
 	let note = getEmptyTeaNote();
 
-	async function save() {
-		await createNote(note);
-		await goto('/notes');
+	async function onSave() {
+		const created = await createNote(note);
+		await goto(`/notes/${created.id}`);
 	}
 </script>
 
-<TeaNoteForm {note} on:save={() => save()} />
+<TeaNoteForm {note} isEmpty on:save={() => onSave()} />

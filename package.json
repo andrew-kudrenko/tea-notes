@@ -50,6 +50,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"date-picker-svelte": "^2.10.1",
 		"ky": "^1.2.0",
 		"node": "^21.2.0"
 	}

@@ -14,13 +14,16 @@
 	import type { EmptyTeaNote } from '$lib/tea-notes/models/tea-note.model';
 
 	export let note: EmptyTeaNote = null!;
+	export let isEmpty = false
 
 	const dispatch = createEventDispatcher();
 </script>
 
-<form class="tea-note-form">
+<form class="tea-note-form" on:submit|preventDefault>
 	<Paper variant="outlined">
-		<div class="tea-note-form__header mdc-typography--headline4">Заметка</div>
+		<div class="tea-note-form__header mdc-typography--headline4">
+			{isEmpty ? 'Новая запись' : note.general.title}
+		</div>
 
 		<LayoutGrid>
 			<Cell span={12}>
@@ -59,10 +62,20 @@
 				<ImpressionForm impression={note.impression} />
 			</Cell>
 
+			
 			<Cell span={12}>
-				<Button on:click={() => dispatch('save', note)} variant="outlined">
-					<Label>Сохранить</Label>
-				</Button>
+				<hr />
+				<div class="tea-note-form__actions">
+					<Button on:click={() => dispatch('save', note)} variant="raised">
+						<Label>Сохранить</Label>
+					</Button>
+
+					{#if !isEmpty}
+					<Button on:click={() => dispatch('remove', note)} color="secondary" variant="outlined">
+						<Label>Удалить</Label>
+					</Button>
+					{/if}
+				</div>
 			</Cell>
 		</LayoutGrid>
 	</Paper>
@@ -72,8 +85,19 @@
 	.tea-note-form {
 		max-width: 1000px;
 
+		hr {
+			margin: .5rem 0 1rem;
+		}
+
 		&__header {
 			text-align: center;
+		}
+
+		&__actions {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 1rem;
 		}
 	}
 </style>

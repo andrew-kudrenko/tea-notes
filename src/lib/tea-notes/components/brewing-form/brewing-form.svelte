@@ -11,7 +11,7 @@
 </script>
 
 <InnerGrid>
-	<Cell span={4}>
+	<Cell spanDevices={{ desktop: 4, tablet: 4, phone: 4 }}>
 		<Textfield
 			bind:value={brewing.temperature}
 			type="number"
@@ -24,7 +24,7 @@
 		/>
 	</Cell>
 
-	<Cell span={4}>
+	<Cell spanDevices={{ desktop: 4, tablet: 4, phone: 4 }}>
 		<Textfield
 			bind:value={brewing.quantity}
 			type="number"
@@ -37,7 +37,7 @@
 		/>
 	</Cell>
 
-	<Cell span={4}>
+	<Cell spanDevices={{ desktop: 4, tablet: 4, phone: 4 }}>
 		<Textfield
 			bind:value={brewing.volume}
 			type="number"

@@ -10,31 +10,29 @@
 </script>
 
 <InnerGrid>
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
 		<Textfield
 			bind:value={impression.comment}
 			textarea
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
 			label="Комментарий"
-			input$rows={3}
+			input$cols={100}
+			input$rows={6}
 			input$resizable={false}
 		/>
 	</Cell>
 
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
 		<Textfield
 			bind:value={impression.wellCombinedWith}
 			textarea
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
 			label="Хорошо сочетается с"
-			input$rows={3}
+			input$cols={100}
+			input$rows={6}
 			input$resizable={false}
 		/>
 	</Cell>
 
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
 		<MeasureRate
 			bind:rate={impression.rate}
 			caption="Оценка"

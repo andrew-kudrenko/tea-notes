@@ -12,6 +12,7 @@ import { EMPTY_INFUSION, type TeaNoteInfusion } from './infusion.model';
 
 export interface TeaNote {
 	id: number;
+	date: Date;
 	general: TeaNoteGeneralInfo;
 	brewing: TeaNoteBrewing;
 	dryLeaf: TeaNoteDryLeaf;
@@ -24,6 +25,7 @@ export type EmptyTeaNote = ReturnType<typeof getEmptyTeaNote>;
 
 export function getEmptyTeaNote() {
 	return {
+		date: new Date(),
 		general: { ...EMPTY_GENERAL_INFO },
 		brewing: { ...EMPTY_BREWING },
 		dryLeaf: { ...EMPTY_DRY_LEAF },

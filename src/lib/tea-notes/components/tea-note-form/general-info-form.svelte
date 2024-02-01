@@ -3,6 +3,8 @@
 	import Textfield from '@smui/textfield';
 	import Select, { Option } from '@smui/select';
 
+	import { DateInput } from 'date-picker-svelte'
+
 	import type { DeepEmpty } from '$lib/common/types/utility.types';
 	import {
 		TEA_KINDS,
@@ -14,7 +16,7 @@
 </script>
 
 <InnerGrid>
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, phone: 12 }}>
 		<Textfield
 			bind:value={general.title}
 			label="Название"
@@ -24,7 +26,18 @@
 		/>
 	</Cell>
 
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 6, phone: 12 }}>
+		<Textfield
+			type='date'
+			value={new Date().toLocaleDateString()}
+			label="Дата дегустации"
+			variant="filled"
+			style="width: 100%;"
+			helperLine$style="width: 100%;"
+		/>
+	</Cell>
+
+	<Cell spanDevices={{ desktop: 4, phone: 4 }}>
 		<Select bind:value={general.kind} label="Вид" variant="filled" hiddenInput style="width: 100%;">
 			<Option value="" />
 			{#each TEA_KIND_KEYS as kind}
@@ -33,27 +46,7 @@
 		</Select>
 	</Cell>
 
-	<Cell span={6}>
-		<Textfield
-			bind:value={general.manufacturer}
-			label="Изготовитель"
-			variant="filled"
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
-		/>
-	</Cell>
-
-	<Cell span={6}>
-		<Textfield
-			bind:value={general.region}
-			label="Регион"
-			variant="filled"
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
-		/>
-	</Cell>
-
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 4, phone: 6 }}>
 		<Textfield
 			bind:value={general.manufacturingYear}
 			label="Год изготовления"
@@ -67,7 +60,7 @@
 		/>
 	</Cell>
 
-	<Cell span={6}>
+	<Cell spanDevices={{ desktop: 4, phone: 6 }}>
 		<Textfield
 			bind:value={general.pricePerGram}
 			label="Цена за грамм, р"
@@ -77,6 +70,26 @@
 			type="number"
 			input$min={0}
 			input$max={1_000}
+		/>
+	</Cell>
+
+	<Cell spanDevices={{ desktop: 6, phone: 12 }}>
+		<Textfield
+			bind:value={general.region}
+			label="Регион"
+			variant="filled"
+			style="width: 100%;"
+			helperLine$style="width: 100%;"
+		/>
+	</Cell>
+
+	<Cell spanDevices={{ desktop: 6, phone: 12 }}>
+		<Textfield
+			bind:value={general.manufacturer}
+			label="Изготовитель"
+			variant="filled"
+			style="width: 100%;"
+			helperLine$style="width: 100%;"
 		/>
 	</Cell>
 </InnerGrid>

@@ -6,17 +6,21 @@
 		Content,
 		Header,
 		Title as DrawerTitle,
-		Subtitle
+		Subtitle,
+		Scrim,
 	} from '@smui/drawer';
-	import List, { Item, Text } from '@smui/list';
+	import List, { Item, Text, Separator, Graphic } from '@smui/list';
 
 	import type { User } from '$lib/user/types/user.types';
+	import { logout } from '$lib/auth/api/auth.api';
+	import { goto } from '$app/navigation';
 
 	let open = false;
 	let active = '';
 
 	function setActive(title: string) {
 		active = title;
+		open = false;
 	}
 
 	const user: User = {
@@ -28,40 +32,48 @@
 	let topAppBar: TopAppBar = null!;
 
 	const pages: Record<'title' | 'url', string>[] = [
-		{ title: 'Вход', url: '/auth/login' },
 		{ title: 'Записки', url: '/notes' },
 		{ title: 'Создать записку', url: '/notes/new' },
-		{ title: 'Профиль', url: '/user' },
-		{ title: 'Index', url: '/' }
 	] as const;
 </script>
 
-<Drawer variant="dismissible" bind:open>
+<Drawer variant="modal" fixed bind:open>
 	<Header>
 		<DrawerTitle>Записочки</DrawerTitle>
 		<Subtitle>Сохраняй впечатления!</Subtitle>
 	</Header>
 	<Content>
 		<List>
+			<Separator />
+
 			{#each pages as page}
 				<Item
 					href={page.url}
 					on:click={() => setActive(page.title)}
 					activated={active === page.title}
 				>
+					<Graphic class="material-icons">bookmark</Graphic>
 					<Text>{page.title}</Text>
 				</Item>
+				<Separator />
 			{/each}
+			<Item on:click={async () => {
+				await logout()
+				await goto('/auth/login')
+			}}>
+				<Text>Выйти</Text>
+			</Item>
 		</List>
 	</Content>
 </Drawer>
 
+<Scrim fixed />
 <AppContent class="app-content">
 	<TopAppBar bind:this={topAppBar} variant="standard">
 		<Row>
 			<Section>
 				<IconButton class="material-icons" on:click={() => (open = !open)}>
-					{open ? 'close' : 'menu'}
+					{'menu'}
 				</IconButton>
 				{#if !open}
 					<Title>Записочки</Title>
