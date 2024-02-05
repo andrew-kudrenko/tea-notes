@@ -12,7 +12,6 @@ import { EMPTY_INFUSION, type TeaNoteInfusion } from './infusion.model';
 
 export interface TeaNote {
 	id: number;
-	date: Date;
 	general: TeaNoteGeneralInfo;
 	brewing: TeaNoteBrewing;
 	dryLeaf: TeaNoteDryLeaf;

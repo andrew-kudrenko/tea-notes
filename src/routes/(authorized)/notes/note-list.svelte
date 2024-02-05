@@ -3,7 +3,6 @@
 
 	import List, {
 		Item,
-		Graphic,
 		Separator,
 		Meta,
 		Text,
@@ -11,25 +10,28 @@
 		SecondaryText
 	} from '@smui/list';
 	import IconButton from '@smui/icon-button';
-	import Checkbox from '@smui/checkbox';
-
+	import Dialog, { Title, Content, Actions } from '@smui/dialog';
+  	import Button, { Label } from '@smui/button';
+ 
 	import { METHODS } from '$lib/tea-notes/models/brewing.model';
 	import type { TeaNote } from '$lib/tea-notes/models/tea-note.model';
-
+	
+	import EditIcon from '$lib/assests/icons/edit.svg?raw'
+	import DeleteIcon from '$lib/assests/icons/delete.svg?raw'
+	
 	export let notes: TeaNote[] = null!;
-	export let selected: number[] = null!;
+
+	let isDeletingDialogOpened = false;
+	let selectedIndex = -1
 
 	const dispatch = createEventDispatcher();
 </script>
 
-<List class="demo-list" twoLine>
-	{#each notes as note}
+<List twoLine>
+	{#each notes as note, idx}
 		<Item>
-			<Graphic>
-				<Checkbox bind:group={selected} value={note.id} />
-			</Graphic>
 			<Text>
-				<a href={`/notes/${note.id}`}>
+				<a href={`/notes/${note.id}`} data-sveltekit-preload-data="tap">
 					<PrimaryText>{note.general.title}</PrimaryText>
 				</a>
 				<SecondaryText>
@@ -37,14 +39,35 @@
 				</SecondaryText>
 			</Text>
 			<Meta>
-				<IconButton on:click={() => dispatch('remove', { id: note.id })} class="material-icons">
-					delete
+				<IconButton on:click={() => {
+					selectedIndex = idx
+					isDeletingDialogOpened = true
+				}}>
+					{@html DeleteIcon}					
 				</IconButton>
-				<a href={`/notes/${note.id}`}>
-					<IconButton class="material-icons">edit</IconButton>
+				<a href={`/notes/${note.id}`} data-sveltekit-preload-data="tap">
+					<IconButton>
+						{@html EditIcon}
+					</IconButton>
 				</a>
 			</Meta>
 		</Item>
 		<Separator />
 	{/each}
 </List>
+
+<Dialog bind:open={isDeletingDialogOpened}>
+	<Title>Подтвердите действие</Title>
+	<Content>Вы действительно хотите удалить?</Content>
+	<Actions>
+		<Button on:click={() => {
+			isDeletingDialogOpened = false; 
+			selectedIndex = -1;
+		}}>
+		<Label>Нет</Label>
+		</Button>
+		<Button on:click={() => dispatch('remove', { id: notes[selectedIndex].id })}>
+		<Label>Да</Label>
+		</Button>
+	</Actions>
+</Dialog>

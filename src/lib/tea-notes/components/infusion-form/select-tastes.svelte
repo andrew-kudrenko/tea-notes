@@ -4,6 +4,8 @@
 	import { TASTES, TASTE_KEYS, type Taste } from '$lib/tea-notes/models/infusion.model';
 
 	export let selected: Taste[] = null!;
+
+	// $: console.log('Selected', [...selected])
 </script>
 
 <div class="mdc-typography--subtitle2">Вкусы</div>

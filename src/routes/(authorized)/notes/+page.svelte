@@ -5,7 +5,6 @@
 	import { fetchNotes, removeNote } from '$lib/tea-notes/api/tea-notes.api';
 	import NoteList from './note-list.svelte';
 
-	let selected: number[] = [];
 	let notes: TeaNote[] = [];
 
 	onMount(update);
@@ -28,4 +27,4 @@
 
 <a href="/notes/new">Новая записка</a>
 
-<NoteList bind:selected {notes} on:remove={(event) => remove(event.detail.id)} />
+<NoteList {notes} on:remove={(event) => remove(event.detail.id)} />

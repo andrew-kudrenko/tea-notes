@@ -7,10 +7,13 @@ import type {
 	LoginResponse,
 	RefreshResponse
 } from '../types/auth.types';
+import { goto } from '$app/navigation';
+import { user } from '$lib/user/store/user.store';
 
 export async function login(payload: LoginRequestPayload) {
 	const { tokens } = await api.post('auth/login', { json: payload }).json<LoginResponse>();
 	setTokens(tokens);
+	await goto('/notes');
 }
 
 export async function logout() {
@@ -22,6 +25,9 @@ export async function logout() {
 
 		localStorage.removeItem(LocalStorage.RefreshToken);
 		localStorage.removeItem(LocalStorage.RefreshTokenExpiresAt);
+
+		user.set(null);
+		await goto('/auth/login');
 	}
 }
 

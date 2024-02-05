@@ -9,11 +9,14 @@
 		Subtitle,
 		Scrim,
 	} from '@smui/drawer';
-	import List, { Item, Text, Separator, Graphic } from '@smui/list';
+	import List, { Item, Text, Separator } from '@smui/list';
+	import MenuSurface from '@smui/menu-surface';
 
-	import type { User } from '$lib/user/types/user.types';
 	import { logout } from '$lib/auth/api/auth.api';
-	import { goto } from '$app/navigation';
+	import { user } from '$lib/user/store/user.store';
+
+	import MenuIcon from '$lib/assests/icons/menu.svg?raw'
+	import AccountIcon from '$lib/assests/icons/account_circle.svg?raw'
 
 	let open = false;
 	let active = '';
@@ -23,13 +26,8 @@
 		open = false;
 	}
 
-	const user: User = {
-		id: 2,
-		nickName: 'andy69',
-		avatarUrl: ''
-	};
-
 	let topAppBar: TopAppBar = null!;
+	let surface: MenuSurface;
 
 	const pages: Record<'title' | 'url', string>[] = [
 		{ title: 'Записки', url: '/notes' },
@@ -45,24 +43,16 @@
 	<Content>
 		<List>
 			<Separator />
-
 			{#each pages as page}
 				<Item
 					href={page.url}
 					on:click={() => setActive(page.title)}
 					activated={active === page.title}
 				>
-					<Graphic class="material-icons">bookmark</Graphic>
 					<Text>{page.title}</Text>
 				</Item>
 				<Separator />
 			{/each}
-			<Item on:click={async () => {
-				await logout()
-				await goto('/auth/login')
-			}}>
-				<Text>Выйти</Text>
-			</Item>
 		</List>
 	</Content>
 </Drawer>
@@ -72,8 +62,8 @@
 	<TopAppBar bind:this={topAppBar} variant="standard">
 		<Row>
 			<Section>
-				<IconButton class="material-icons" on:click={() => (open = !open)}>
-					{'menu'}
+				<IconButton on:click={() => (open = !open)}>
+					{@html MenuIcon}
 				</IconButton>
 				{#if !open}
 					<Title>Записочки</Title>
@@ -81,8 +71,26 @@
 			</Section>
 
 			<Section align="end" toolbar>
-				<div class="mdc-typography--subtitle2">{user.nickName}</div>
-				<IconButton class="material-icons">face</IconButton>
+				{#if $user}
+				<div class="mdc-typography--subtitle2">{$user.nickName}</div>
+				<IconButton on:click={() => surface.setOpen(true)}>
+					{@html AccountIcon}
+				</IconButton>
+				{/if}
+				<div style="margin: 1em; display: flex; flex-direction: column; align-items: flex-end;">
+					<MenuSurface bind:this={surface} anchorCorner="BOTTOM_RIGHT">
+						<List>
+							<Item>
+								<Text>Профиль</Text>
+							</Item>
+	
+							<Separator />
+							<Item on:click={logout}>
+								<Text>Выйти</Text>
+							</Item>
+						</List>
+					</MenuSurface>
+				</div>
 			</Section>
 		</Row>
 	</TopAppBar>

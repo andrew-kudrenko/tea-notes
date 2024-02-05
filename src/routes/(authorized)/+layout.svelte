@@ -1,23 +1,5 @@
-<script context="module" lang="ts">
-	import { browser } from '$app/environment';
-
+<script lang="ts">
 	import AppBar from '$lib/common/components/app-bar/app-bar.svelte';
-	import { fetchMe } from '$lib/user/api/users.api';
-
-	export async function load() {
-		const user = await fetchMe()
-
-		console.log('USER!', user);
-
-		if (browser && !user) {
-			return {
-				redirect: '/auth/login',
-				status: 302,
-			}
-		}
-
-		return { user }
-	}
 </script>
 
 <AppBar>
