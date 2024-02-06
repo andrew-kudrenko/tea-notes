@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	
+	import Fab, { Icon } from '@smui/fab'
 
 	import type { TeaNote } from '$lib/tea-notes/models/tea-note.model';
 	import { fetchNotes, removeNote } from '$lib/tea-notes/api/tea-notes.api';
-	import NoteList from './note-list.svelte';
+	import NoteList from './NoteList.svelte';
+
+	import AddNoteIcon from '$lib/assests/icons/note_add.svg?raw' 
 
 	let notes: TeaNote[] = [];
 
@@ -23,8 +27,25 @@
 	}
 </script>
 
-<div class="mdc-typography--headline4">Записки</div>
+<style lang="scss">
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
-<a href="/notes/new">Новая записка</a>
+		margin-bottom: 1rem;
+	}
+</style>
 
-<NoteList {notes} on:remove={(event) => remove(event.detail.id)} />
+<header class="header">
+	<div class="mdc-typography--headline4">Заметки</div>
+
+	<div class="new-note-button">
+		<Fab color="primary" href='/notes/new'>
+			<Icon>{@html AddNoteIcon}</Icon>
+		</Fab>
+	</div>
+</header>
+
+
+<NoteList {notes} on:remove={({detail}) => remove(detail.id)} />

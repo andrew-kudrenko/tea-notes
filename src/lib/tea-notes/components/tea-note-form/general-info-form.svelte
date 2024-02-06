@@ -3,14 +3,13 @@
 	import Textfield from '@smui/textfield';
 	import Select, { Option } from '@smui/select';
 
-	import { DateInput } from 'date-picker-svelte'
-
 	import type { DeepEmpty } from '$lib/common/types/utility.types';
 	import {
 		TEA_KINDS,
 		TEA_KIND_KEYS,
 		type TeaNoteGeneralInfo
 	} from '$lib/tea-notes/models/general-info.model';
+	import DatePicker from '$lib/common/components/app-bar/DatePicker.svelte';
 
 	export let general: DeepEmpty<TeaNoteGeneralInfo> = null!;
 </script>
@@ -27,14 +26,7 @@
 	</Cell>
 
 	<Cell spanDevices={{ desktop: 6, phone: 12 }}>
-		<Textfield
-			type='date'
-			value={new Date().toLocaleDateString()}
-			label="Дата дегустации"
-			variant="filled"
-			style="width: 100%;"
-			helperLine$style="width: 100%;"
-		/>
+		<DatePicker bind:date={general.tastingDate} label='Дата дегустации' />
 	</Cell>
 
 	<Cell spanDevices={{ desktop: 4, phone: 4 }}>

@@ -37,7 +37,7 @@
 
 <Drawer variant="modal" fixed bind:open>
 	<Header>
-		<DrawerTitle>Записочки</DrawerTitle>
+		<DrawerTitle>Tea Notes</DrawerTitle>
 		<Subtitle>Сохраняй впечатления!</Subtitle>
 	</Header>
 	<Content>
@@ -66,7 +66,7 @@
 					{@html MenuIcon}
 				</IconButton>
 				{#if !open}
-					<Title>Записочки</Title>
+					<Title>Tea Notes</Title>
 				{/if}
 			</Section>
 

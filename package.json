@@ -19,8 +19,10 @@
 		"@smui/button": "^7.0.0-beta.16",
 		"@smui/checkbox": "^7.0.0-beta.16",
 		"@smui/chips": "^7.0.0-beta.16",
+		"@smui/data-table": "^7.0.0-beta.16",
 		"@smui/dialog": "^7.0.0-beta.16",
 		"@smui/drawer": "^7.0.0-beta.16",
+		"@smui/fab": "^7.0.0-beta.16",
 		"@smui/form-field": "^7.0.0-beta.16",
 		"@smui/icon-button": "^7.0.0-beta.16",
 		"@smui/layout-grid": "^7.0.0-beta.16",
@@ -53,7 +55,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"date-picker-svelte": "^2.10.1",
 		"ky": "^1.2.0",
 		"node": "^21.2.0"
 	}

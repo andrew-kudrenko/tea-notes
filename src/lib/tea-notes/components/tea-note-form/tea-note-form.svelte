@@ -11,7 +11,10 @@
 	import InfusionForm from '$lib/tea-notes/components/tea-note-form/infusion-form.svelte';
 	import AftertasteForm from '$lib/tea-notes/components/tea-note-form/aftertaste-form.svelte';
 	import ImpressionForm from '$lib/tea-notes/components/tea-note-form/impression-form.svelte';
-	import type { EmptyTeaNote } from '$lib/tea-notes/models/tea-note.model';
+	import type { EmptyTeaNote, TeaNote } from '$lib/tea-notes/models/tea-note.model';
+	import RemoveConfirmation from '$lib/tea-notes/components/RemoveConfirmation.svelte';
+
+	let selectedNote: TeaNote | null = null;
 
 	export let note: EmptyTeaNote = null!;
 	export let isEmpty = false
@@ -22,7 +25,7 @@
 <form class="tea-note-form" on:submit|preventDefault>
 	<Paper variant="outlined">
 		<div class="tea-note-form__header mdc-typography--headline4">
-			{isEmpty ? 'Новая запись' : note.general.title}
+			{isEmpty ? 'Новая заметка' : note.general.title}
 		</div>
 
 		<LayoutGrid>
@@ -71,7 +74,7 @@
 					</Button>
 
 					{#if !isEmpty}
-					<Button on:click={() => dispatch('remove', note)} color="secondary" variant="outlined">
+					<Button on:click={() => (selectedNote = note)} color="secondary" variant="outlined">
 						<Label>Удалить</Label>
 					</Button>
 					{/if}
@@ -80,6 +83,11 @@
 		</LayoutGrid>
 	</Paper>
 </form>
+<!-- 
+<RemoveConfirmation
+	bind:note
+	on:accept={({ detail }) => dispatch('remove', { id: detail.id })}
+/> -->
 
 <style lang="scss">
 	.tea-note-form {
