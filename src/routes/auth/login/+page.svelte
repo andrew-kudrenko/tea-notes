@@ -37,12 +37,16 @@
 				</Cell>
 				
 				<Cell span={12}>
-					<hr />
 					<div class="auth-login-form__actions">
 						<Button on:click={() => login(credentials)} variant="outlined">
 							<Label>Войти</Label>
 						</Button>
 					</div>
+				</Cell>
+
+				<Cell span={12}>
+					<hr />
+					<a href="/auth/register">Ещё нет аккаунта?</a>
 				</Cell>
 			</LayoutGrid>
 		</form>

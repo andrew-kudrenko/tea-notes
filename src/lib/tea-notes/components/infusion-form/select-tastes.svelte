@@ -5,7 +5,7 @@
 
 	export let selected: Taste[] = null!;
 
-	// $: console.log('Selected', [...selected])
+	$: console.log('Selected', [...selected])
 </script>
 
 <div class="mdc-typography--subtitle2">Вкусы</div>

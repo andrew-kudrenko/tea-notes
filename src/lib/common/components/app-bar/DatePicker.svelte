@@ -5,13 +5,19 @@
 
     import CalendarIcon from '$lib/assests/icons/event_note.svg?raw'
   
-    export let date = "";
+    export let date: string | null = null;
     export let helperText = ''
     export let label = ''
   
     function onClick({ target }) {
-      if (target?.nodeName === "INPUT") {
+      if (target.nodeName === "INPUT") {
         target.showPicker()
+      }
+    }
+
+    $: {
+      if (!date?.length) {
+        date = null
       }
     }
   
@@ -25,7 +31,7 @@
     variant="filled"
     style="width: 100%;"
     helperLine$style="width: 100%;" 
-    >
+  >
     <Icon slot="trailingIcon">
         {@html CalendarIcon}
     </Icon>

@@ -5,10 +5,16 @@ import type {
 	AuthTokens,
 	LoginRequestPayload,
 	LoginResponse,
-	RefreshResponse
+	RefreshResponse,
+	RegisterRequestPayload
 } from '../types/auth.types';
 import { goto } from '$app/navigation';
 import { user } from '$lib/user/store/user.store';
+
+export async function register(payload: RegisterRequestPayload) {
+	await api.post('auth/register', { json: payload }).json();
+	await login({ nickname: payload.nickname, password: payload.password });
+}
 
 export async function login(payload: LoginRequestPayload) {
 	const { tokens } = await api.post('auth/login', { json: payload }).json<LoginResponse>();

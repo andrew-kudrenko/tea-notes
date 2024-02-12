@@ -24,11 +24,9 @@ async function retryWithRefreshedTokens(
 	response: Response
 ) {
 	if (!response.ok && response.status === 401) {
-		if (isRefreshTokenRelevant()) {
-			if (await tryUpdateTokens()) {
-				attachAuthorizationHeader(request);
-				return api(request, options);
-			}
+		if (isRefreshTokenRelevant() && (await tryUpdateTokens())) {
+			attachAuthorizationHeader(request);
+			return api(request, options);
 		} else {
 			await logout();
 		}

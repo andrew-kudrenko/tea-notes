@@ -6,7 +6,7 @@
         от {note.general.tastingDate}?
     </Content>
     <Actions>
-        <Button on:click={() => (note = null)}>
+        <Button on:click={() => dispatch('cancel')}>
             <Label>Нет</Label>
         </Button>
         
@@ -26,8 +26,7 @@
 	import type { TeaNote } from '$lib/tea-notes/models/tea-note.model';
 
     export let note: TeaNote | null = null
+    export let open = false
     
-    $: open = !!note
-
     const dispatch = createEventDispatcher()
 </script>

@@ -14,16 +14,27 @@
 	import type { EmptyTeaNote, TeaNote } from '$lib/tea-notes/models/tea-note.model';
 	import RemoveConfirmation from '$lib/tea-notes/components/RemoveConfirmation.svelte';
 
-	let selectedNote: TeaNote | null = null;
+	let removableNote: TeaNote | null = null;
+	let isRemoveConfirmationOpened = false
 
 	export let note: EmptyTeaNote = null!;
 	export let isEmpty = false
 
 	const dispatch = createEventDispatcher();
+
+	function openRemoveConfirmation(note: TeaNote) {
+		removableNote = note
+		isRemoveConfirmationOpened = true
+	} 
+
+	function closeRemoveConfirmation() {
+		removableNote = null
+		isRemoveConfirmationOpened = false
+	}
 </script>
 
 <form class="tea-note-form" on:submit|preventDefault>
-	<Paper variant="outlined">
+	<Paper variant="outlined" elevation={10}>
 		<div class="tea-note-form__header mdc-typography--headline4">
 			{isEmpty ? 'Новая заметка' : note.general.title}
 		</div>
@@ -69,12 +80,12 @@
 			<Cell span={12}>
 				<hr />
 				<div class="tea-note-form__actions">
-					<Button on:click={() => dispatch('save', note)} variant="raised">
+					<Button on:click={() => dispatch('save', {note})} variant="raised">
 						<Label>Сохранить</Label>
 					</Button>
 
 					{#if !isEmpty}
-					<Button on:click={() => (selectedNote = note)} color="secondary" variant="outlined">
+					<Button on:click={() => openRemoveConfirmation(note)} color="secondary" variant="outlined">
 						<Label>Удалить</Label>
 					</Button>
 					{/if}
@@ -83,11 +94,13 @@
 		</LayoutGrid>
 	</Paper>
 </form>
-<!-- 
+
 <RemoveConfirmation
-	bind:note
+	note={removableNote}
+	bind:open={isRemoveConfirmationOpened}
 	on:accept={({ detail }) => dispatch('remove', { id: detail.id })}
-/> -->
+	on:cancel={() => closeRemoveConfirmation()}
+/>
 
 <style lang="scss">
 	.tea-note-form {

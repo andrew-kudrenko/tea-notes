@@ -23,3 +23,10 @@ export interface AuthToken {
 	token: string;
 	expiresAt: string;
 }
+
+export interface RegisterRequestPayload {
+	nickname: string;
+	email: string;
+	password: string;
+	passwordRepeat: string;
+}

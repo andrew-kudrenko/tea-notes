@@ -15,13 +15,18 @@
 	
 	import { METHODS } from '$lib/tea-notes/models/brewing.model';
 	import type { TeaNote } from '$lib/tea-notes/models/tea-note.model';
-	import { TEA_KINDS } from './../../../lib/tea-notes/models/general-info.model';
+	import { TEA_KINDS } from '$lib/tea-notes/models/general-info.model';
 	
 	import RemoveConfirmation from '$lib/tea-notes/components/RemoveConfirmation.svelte';
+
+	import EyeIcon from '$lib/assests/icons/preview.svg?raw'
+	import RemoveIcon from '$lib/assests/icons/delete.svg?raw'
 	
 	export let notes: TeaNote[] = [];
 	
-	let selectedNote: TeaNote | null = null
+	let noteForRemoving: TeaNote | null = null
+	let isRemoveConfirmationOpened = false
+
 	let rowsPerPage = 10;
 	let currentPage = 0;
 	let selected = []
@@ -32,6 +37,16 @@
 	$: lastPage = Math.max(Math.ceil(notes.length / rowsPerPage) - 1, 0);
 
 	const dispatch = createEventDispatcher();
+
+	function openRemoveConfirmation(note: TeaNote) {
+		noteForRemoving = note
+		isRemoveConfirmationOpened = true
+	} 
+
+	function closeRemoveConfirmation() {
+		noteForRemoving = null
+		isRemoveConfirmationOpened = false
+	}
 </script>
 
 <DataTable table$aria-label="Todo list" style="width: 100%;">
@@ -44,6 +59,8 @@
 		<Cell>Вид</Cell>
 		<Cell numeric>Дата</Cell>
 		<Cell numeric>Способ</Cell>
+		<Cell>Просмотр</Cell>
+		<Cell>Удалить</Cell>
 	  </Row>
 	</Head>
 	<Body>
@@ -57,22 +74,32 @@
 				/>
 			</Cell>
 		  <Cell>
-			<a href={`/notes/${item.id}`}>
+			<a href={`/notes/${item.id}`} data-sveltekit-preload-data="tap">
 				<b>
 					{item.general.title}
 				</b>
 			</a>
 			</Cell>
-		  <Cell>{TEA_KINDS[item.general.kind] ?? '-'}</Cell>
+		  <Cell>{TEA_KINDS[item.general.kind] || '-'}</Cell>
 		  <Cell>{item.general.tastingDate}</Cell>
-		  <Cell>{METHODS[item.brewing.method] ?? '-'}</Cell>
+		  <Cell>{METHODS[item.brewing.method] || '-'}</Cell>
+		  <Cell>
+			  <IconButton href={`/notes/preview/${item.id}`} data-sveltekit-preload-data="tap">
+				  {@html EyeIcon}
+			  </IconButton>
+		  </Cell>
+		  <Cell>
+			<IconButton on:click={() => openRemoveConfirmation(item)}>
+				{@html RemoveIcon}
+			</IconButton>
+		</Cell>
 		</Row>
 	  {/each}
 	</Body>
    
 	<Pagination slot="paginate">
 	  <svelte:fragment slot="rowsPerPage">
-		<Label>Rows Per Page</Label>
+		<Label>Показывать на странице</Label>
 		<Select variant="outlined" bind:value={rowsPerPage} noLabel>
 		  <Option value={10}>10</Option>
 		  <Option value={25}>25</Option>
@@ -80,7 +107,7 @@
 		</Select>
 	  </svelte:fragment>
 	  <svelte:fragment slot="total">
-		{start + 1}-{end} of {notes.length}
+		{start + 1}-{end} из {notes.length}
 	  </svelte:fragment>
    
 	  <IconButton
@@ -115,6 +142,8 @@
   </DataTable>
 
 <RemoveConfirmation
-	bind:note={selectedNote}
+	note={noteForRemoving}
+	bind:open={isRemoveConfirmationOpened}
 	on:accept={({ detail }) => dispatch('remove', { id: detail.id })}
+	on:cancel={() => closeRemoveConfirmation()}
 />
