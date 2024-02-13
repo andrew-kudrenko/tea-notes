@@ -11,9 +11,12 @@ import type {
 import { goto } from '$app/navigation';
 import { user } from '$lib/user/store/user.store';
 
+export function confirmEmail(code: string) {
+	return api.get(`auth/confirm-email/${code}`);
+}
+
 export async function register(payload: RegisterRequestPayload) {
 	await api.post('auth/register', { json: payload }).json();
-	await login({ nickname: payload.nickname, password: payload.password });
 }
 
 export async function login(payload: LoginRequestPayload) {
