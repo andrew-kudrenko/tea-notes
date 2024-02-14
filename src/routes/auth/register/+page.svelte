@@ -69,7 +69,7 @@
 				<Cell span={12}>
 					<hr />
 					<div class="auth-login-form__actions">
-						<Button on:click={onSubmit} variant="outlined">
+						<Button on:click={() => register(credentials)} variant="outlined">
 							<Label>Отправить</Label>
 						</Button>
 					</div>
@@ -135,16 +135,4 @@
         passwordRepeat: 'e5573g39ra',
         email: 'andrewkudrenko19@gmail.com',
 	};
-
-	async function onSubmit() {
-		localStorage.setItem('nickname', credentials.nickname)
-		localStorage.setItem('password', credentials.password)
-	
-		try {
-			await register(credentials)
-		} finally {
-			localStorage.removeItem('nickname')
-			localStorage.removeItem('password')
-		}
-	}
 </script>

@@ -56,11 +56,8 @@
 			<Checkbox />
 		  </Cell>
 		<Cell style="width: 100%;">Название</Cell>
-		<Cell>Вид</Cell>
 		<Cell numeric>Дата</Cell>
-		<Cell numeric>Способ</Cell>
-		<Cell>Просмотр</Cell>
-		<Cell>Удалить</Cell>
+		<!-- <Cell></Cell> -->
 	  </Row>
 	</Head>
 	<Body>
@@ -80,19 +77,12 @@
 				</b>
 			</a>
 			</Cell>
-		  <Cell>{TEA_KINDS[item.general.kind] || '-'}</Cell>
 		  <Cell>{item.general.tastingDate}</Cell>
-		  <Cell>{METHODS[item.brewing.method] || '-'}</Cell>
-		  <Cell>
+		  <!-- <Cell>
 			  <IconButton href={`/notes/preview/${item.id}`} data-sveltekit-preload-data="tap">
 				  {@html EyeIcon}
 			  </IconButton>
-		  </Cell>
-		  <Cell>
-			<IconButton on:click={() => openRemoveConfirmation(item)}>
-				{@html RemoveIcon}
-			</IconButton>
-		</Cell>
+		  </Cell> -->
 		</Row>
 	  {/each}
 	</Body>
