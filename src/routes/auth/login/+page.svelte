@@ -97,13 +97,13 @@
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid'
 
-	import type { LoginRequestPayload } from '$lib/auth/types/auth.types';
+	import type { LoginPayload } from '$lib/auth/types/auth.types';
 
 	import PasswordIcon from '$lib/assests/icons/password.svg?raw'
 	import AccountIcon from '$lib/assests/icons/account_circle.svg?raw'
 	import { login } from '$lib/auth/api/auth.api';
 
-	let credentials: LoginRequestPayload = {
+	let credentials: LoginPayload = {
 		nickname: 'luuy',
 		password: 'e5573g39ra'
 	};

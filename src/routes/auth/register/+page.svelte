@@ -9,7 +9,7 @@
 	
 				<Cell span={12}>
 					<Textfield 
-						bind:value={credentials.nickname} 
+						bind:value={formData.nickname} 
 						invalid={errors.nickname.length > 0}
 						label="Ник" 
 						variant="filled"
@@ -25,7 +25,7 @@
 
                 <Cell span={12}>
 					<Textfield 
-						bind:value={credentials.email} 
+						bind:value={formData.email} 
 						invalid={errors.email.length > 0}
                         type="email"
 						label="Эл. почта" 
@@ -42,7 +42,7 @@
 				
 				<Cell span={12}>
 					<Textfield 
-						bind:value={credentials.password} 
+						bind:value={formData.password} 
 						invalid={errors.password.length > 0}
 						label="Пароль" 
 						type="password"
@@ -59,7 +59,7 @@
 
                 <Cell span={12}>
 					<Textfield 
-						bind:value={credentials.passwordRepeat}
+						bind:value={formData.passwordRepeat}
 						invalid={errors.passwordRepeat.length > 0}
 						label="Подтверждение пароля" 
 						type="password"
@@ -79,7 +79,7 @@
 					<div class="auth-login-form__actions">
 						<Button 
 							disabled={!isValid} 
-							on:click={() => onSubmit(credentials)} 
+							on:click={() => onSubmit(formData)} 
 							variant="outlined"
 						>
 							<Label>Отправить</Label>
@@ -137,29 +137,33 @@
 	import LayoutGrid, { Cell } from '@smui/layout-grid'
 	import HelperText from '@smui/textfield/helper-text';
 
-	import type { RegisterRequestPayload } from '$lib/auth/types/auth.types';
-
 	import PasswordIcon from '$lib/assests/icons/password.svg?raw'
 	import AccountIcon from '$lib/assests/icons/account_circle.svg?raw'
 	import { register } from '$lib/auth/api/auth.api';
+	import { RegisterFormDataSchema, type RegisterPayload } from '$lib/auth/types/register.types';
 
-	let credentials: RegisterRequestPayload = {
+	let formData: RegisterPayload = {
 		nickname: 'luuy',
 		password: 'e5573g39ra',
         passwordRepeat: 'e5573g39ra',
         email: 'andrewkudrenko19@gmail.com',
 	};
 
-	let errors: Record<keyof RegisterRequestPayload, string> = {
+	let errors: Record<keyof RegisterPayload, string> = {
 		nickname: '',
 		password: '',
         passwordRepeat: '',
         email: '',
 	}
 
-	let isValid = true
+	let isValid = false
 
-	async function onSubmit(credentials: RegisterRequestPayload) {
+	$: {
+		const result = RegisterFormDataSchema.safeParse(formData)
+		isValid = result.success
+	}
+
+	async function onSubmit(credentials: RegisterPayload) {
 		try {
 			await register(credentials)
 		} catch (e) {
