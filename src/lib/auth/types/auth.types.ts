@@ -16,7 +16,6 @@ export interface RefreshResponse {
 
 export interface AuthTokens {
 	access: AuthToken;
-	refresh: AuthToken;
 }
 
 export interface AuthToken {

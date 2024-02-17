@@ -10,11 +10,13 @@
 				<Cell span={12}>
 					<Textfield 
 						bind:value={credentials.nickname} 
+						invalid={errors.nickname.length > 0}
 						label="Ник" 
 						variant="filled"
 						style="width: 100%;"
 						helperLine$style="width: 100%;"
 					>
+						<HelperText slot="helper">{errors.nickname}</HelperText>
 						<Icon slot="trailingIcon">
 							{@html AccountIcon}
 						</Icon>
@@ -24,12 +26,14 @@
                 <Cell span={12}>
 					<Textfield 
 						bind:value={credentials.email} 
+						invalid={errors.email.length > 0}
                         type="email"
 						label="Эл. почта" 
 						variant="filled"
 						style="width: 100%;"
 						helperLine$style="width: 100%;"
-					>
+					>				
+						<HelperText slot="helper">{errors.email}</HelperText>
 						<Icon slot="trailingIcon">
 							{@html AccountIcon}
 						</Icon>
@@ -39,12 +43,14 @@
 				<Cell span={12}>
 					<Textfield 
 						bind:value={credentials.password} 
+						invalid={errors.password.length > 0}
 						label="Пароль" 
 						type="password"
 						variant="filled"
 						style="width: 100%;"
 						helperLine$style="width: 100%;"
 					>
+						<HelperText slot="helper">{errors.password}</HelperText>
 						<Icon slot="trailingIcon">
 							{@html PasswordIcon}
 						</Icon>
@@ -53,13 +59,15 @@
 
                 <Cell span={12}>
 					<Textfield 
-						bind:value={credentials.passwordRepeat} 
+						bind:value={credentials.passwordRepeat}
+						invalid={errors.passwordRepeat.length > 0}
 						label="Подтверждение пароля" 
 						type="password"
 						variant="filled"
 						style="width: 100%;"
 						helperLine$style="width: 100%;"
 					>
+						<HelperText slot="helper">{errors.passwordRepeat}</HelperText>
 						<Icon slot="trailingIcon">
 							{@html PasswordIcon}
 						</Icon>
@@ -69,7 +77,11 @@
 				<Cell span={12}>
 					<hr />
 					<div class="auth-login-form__actions">
-						<Button on:click={() => register(credentials)} variant="outlined">
+						<Button 
+							disabled={!isValid} 
+							on:click={() => onSubmit(credentials)} 
+							variant="outlined"
+						>
 							<Label>Отправить</Label>
 						</Button>
 					</div>
@@ -118,16 +130,18 @@
 </style>
 	
 <script lang="ts">
+	import { HTTPError } from 'ky';
 	import Textfield from '@smui/textfield';
 	import Icon from '@smui/textfield/icon';
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid'
+	import HelperText from '@smui/textfield/helper-text';
 
-	import { register } from '$lib/auth/api/auth.api';
 	import type { RegisterRequestPayload } from '$lib/auth/types/auth.types';
 
 	import PasswordIcon from '$lib/assests/icons/password.svg?raw'
 	import AccountIcon from '$lib/assests/icons/account_circle.svg?raw'
+	import { register } from '$lib/auth/api/auth.api';
 
 	let credentials: RegisterRequestPayload = {
 		nickname: 'luuy',
@@ -135,4 +149,25 @@
         passwordRepeat: 'e5573g39ra',
         email: 'andrewkudrenko19@gmail.com',
 	};
+
+	let errors: Record<keyof RegisterRequestPayload, string> = {
+		nickname: '',
+		password: '',
+        passwordRepeat: '',
+        email: '',
+	}
+
+	let isValid = true
+
+	async function onSubmit(credentials: RegisterRequestPayload) {
+		try {
+			await register(credentials)
+		} catch (e) {
+			if (e instanceof HTTPError) {
+				const response = await e.response.json()
+				Object.keys(errors).forEach(k => errors[k] = response.errors[k] ?? '')
+				errors = errors
+			}
+		}
+	}
 </script>

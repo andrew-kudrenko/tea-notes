@@ -12,7 +12,7 @@
 	import List, { Item, Text, Separator } from '@smui/list';
 	import MenuSurface from '@smui/menu-surface';
 
-	import { logout } from '$lib/auth/api/auth.api';
+	import { logout } from '$lib/common/api/auth.api';
 	import { user } from '$lib/user/store/user.store';
 
 	import MenuIcon from '$lib/assests/icons/menu.svg?raw'
@@ -72,7 +72,7 @@
 
 			<Section align="end" toolbar>
 				{#if $user}
-				<div class="mdc-typography--subtitle2">{$user.nickName}</div>
+				<div class="mdc-typography--subtitle2">{$user.nickname}</div>
 				<IconButton on:click={() => surface.setOpen(true)}>
 					{@html AccountIcon}
 				</IconButton>
