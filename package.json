@@ -56,6 +56,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@felte/validator-zod": "^1.0.17",
+		"felte": "^1.2.14",
 		"ky": "^1.2.0",
 		"node": "^21.2.0",
 		"zod": "^3.22.4"

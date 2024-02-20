@@ -6,7 +6,7 @@ import { setAuthTokens } from '$lib/common/api/auth.api';
 import type { RegisterPayload } from '../types/register.types';
 import type { LoginPayload, LoginResponse } from '../types/login.types';
 
-export const unauthorizedApi = ky.create({ prefixUrl: API_URL });
+export const unauthorizedApi = ky.create({ prefixUrl: API_URL, credentials: 'include' });
 
 export function confirmEmail(code: string) {
 	return unauthorizedApi.get(`auth/confirm-email/${code}`);
