@@ -20,11 +20,10 @@ export interface TeaNote {
 	impression: TeaNoteImpression;
 }
 
-export type EmptyTeaNote = ReturnType<typeof getEmptyTeaNote>;
+export type EmptyTeaNote = Omit<TeaNote, 'id'>;
 
-export function getEmptyTeaNote() {
+export function getEmptyTeaNote(): EmptyTeaNote {
 	return {
-		date: new Date(),
 		general: { ...EMPTY_GENERAL_INFO },
 		brewing: { ...EMPTY_BREWING },
 		dryLeaf: { ...EMPTY_DRY_LEAF },

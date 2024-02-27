@@ -37,7 +37,12 @@
 
 <Drawer variant="modal" fixed bind:open>
 	<Header>
-		<DrawerTitle>Tea Notes</DrawerTitle>
+		<DrawerTitle>
+			<span>Tea Notes</span>
+			<IconButton on:click={() => (open = !open)}>
+				{@html MenuIcon}
+			</IconButton>
+		</DrawerTitle>
 		<Subtitle>Сохраняй впечатления!</Subtitle>
 	</Header>
 	<Content>

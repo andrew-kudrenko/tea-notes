@@ -2,11 +2,10 @@
 	import { Cell, InnerGrid } from '@smui/layout-grid';
 	import Textfield from '@smui/textfield';
 
-	import type { DeepEmpty } from '$lib/common/types/utility.types';
 	import type { TeaNoteAftertaste } from '$lib/tea-notes/models/aftertaste.model';
-	import MeasureRate from '$lib/tea-notes/components/common/measure-rate.svelte';
+	import MeasureRate from '$lib/tea-notes/components/MeasureRate.svelte';
 
-	export let aftertaste: DeepEmpty<TeaNoteAftertaste> = null!;
+	export let aftertaste!: TeaNoteAftertaste
 </script>
 
 <InnerGrid>
@@ -16,8 +15,8 @@
 			textarea
 			label="Ощущения"
 			input$cols={100}
-			input$rows={6}
-			input$resizable={false}
+			input$rows={3}
+			input$resizable
 		/>
 	</Cell>
 

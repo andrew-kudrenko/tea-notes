@@ -41,7 +41,7 @@
 	<div class="mdc-typography--headline4">Заметки</div>
 
 	<div class="new-note-button">
-		<Fab color="primary" href='/notes/new'>
+		<Fab mini color="primary" href='/notes/new'>
 			<Icon>{@html AddNoteIcon}</Icon>
 		</Fab>
 	</div>

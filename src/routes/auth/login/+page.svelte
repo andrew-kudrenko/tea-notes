@@ -1,6 +1,5 @@
 <div class="login-page">
-	<div class="container">
-		<div class="picture"></div>
+	<Paper variant="outlined">
 		<form class="auth-login-form" on:submit|preventDefault>
 			<LayoutGrid>
 				<Cell span={12}>
@@ -43,14 +42,14 @@
 						</Button>
 					</div>
 				</Cell>
-
+	
 				<Cell span={12}>
 					<hr />
 					<a href="/auth/register">Ещё нет аккаунта?</a>
 				</Cell>
 			</LayoutGrid>
 		</form>
-	</div>
+	</Paper>
 </div>
 
 <style lang="scss">
@@ -63,21 +62,6 @@
 		justify-content: center;
 
 		background: rgb(255,255,255);
-
-		.container {
-			min-width: 600px;
-			display: flex;
-			border-radius: 5px;
-			border: 1px solid #ccc;
-
-			.picture {
-				flex-grow: 1;
-				background-image: url('https://i.pinimg.com/564x/48/d1/0a/48d10a15a16f8c9aa852c2601c81943b.jpg');
-				background-repeat: no-repeat;
-				background-position: center;
-				background-size: cover;
-			}
-		}
 
 		.auth-login-form {
 			background-color: #fff;
@@ -97,11 +81,11 @@
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid'
 
-	import type { LoginPayload } from '$lib/auth/types/auth.types';
-
 	import PasswordIcon from '$lib/assests/icons/password.svg?raw'
 	import AccountIcon from '$lib/assests/icons/account_circle.svg?raw'
 	import { login } from '$lib/auth/api/auth.api';
+	import type { LoginPayload } from '$lib/auth/types/login.types';
+	import Paper from '@smui/paper';
 
 	let credentials: LoginPayload = {
 		nickname: 'luuy',

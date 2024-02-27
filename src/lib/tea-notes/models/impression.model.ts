@@ -1,12 +1,10 @@
-import type { DeepEmpty } from '$lib/common/types/utility.types';
-
 export interface TeaNoteImpression {
-	rate: number;
+	rate: number | null;
 	comment: string;
 	wellCombinedWith: string;
 }
 
-export const EMPTY_IMPRESSION: DeepEmpty<TeaNoteImpression> = {
+export const EMPTY_IMPRESSION: TeaNoteImpression = {
 	comment: '',
 	rate: null,
 	wellCombinedWith: ''

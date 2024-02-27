@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AppBar from '$lib/common/components/app-bar/app-bar.svelte';
+	import AppBar from '$lib/common/components/AppBar.svelte';
 </script>
 
 <AppBar>

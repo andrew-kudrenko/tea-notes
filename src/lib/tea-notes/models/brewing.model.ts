@@ -1,5 +1,3 @@
-import type { DeepEmpty } from '$lib/common/types/utility.types';
-
 export const enum TeaDishware {
 	Teapot = 'teapot',
 	Gaiwan = 'gaiwan',
@@ -16,14 +14,14 @@ export const enum TeaBrewingMethod {
 }
 
 export interface TeaNoteBrewing {
-	method: TeaBrewingMethod;
-	dishware: TeaDishware;
-	volume: number;
-	temperature: number;
-	quantity: number;
+	method: TeaBrewingMethod | null;
+	dishware: TeaDishware | null;
+	volume: number | null;
+	temperature: number | null;
+	quantity: number | null;
 }
 
-export const EMPTY_BREWING: DeepEmpty<TeaNoteBrewing> = {
+export const EMPTY_BREWING: TeaNoteBrewing = {
 	method: null,
 	dishware: null,
 	quantity: null,

@@ -5,19 +5,19 @@
 	import Paper from '@smui/paper';
 	import Button, { Label } from '@smui/button';
 
-	import GeneralInfoForm from '$lib/tea-notes/components/tea-note-form/general-info-form.svelte';
-	import BrewingForm from '$lib/tea-notes/components/brewing-form/brewing-form.svelte';
-	import DryLeafForm from '$lib/tea-notes/components/tea-note-form/dry-leaf-form.svelte';
-	import InfusionForm from '$lib/tea-notes/components/tea-note-form/infusion-form.svelte';
-	import AftertasteForm from '$lib/tea-notes/components/tea-note-form/aftertaste-form.svelte';
-	import ImpressionForm from '$lib/tea-notes/components/tea-note-form/impression-form.svelte';
 	import type { EmptyTeaNote, TeaNote } from '$lib/tea-notes/models/tea-note.model';
+	import GeneralInfoForm from '$lib/tea-notes/components/GeneralInfoForm.svelte'
+	import BrewingForm from '$lib/tea-notes/components/BrewingForm.svelte';
+	import DryLeafForm from '$lib/tea-notes/components/DryLeaf-form.svelte';
+	import InfusionForm from '$lib/tea-notes/components/InfusionForm.svelte';
+	import AftertasteForm from '$lib/tea-notes/components/AftertasteForm.svelte';
+	import ImpressionForm from '$lib/tea-notes/components/ImpressionForm.svelte';
 	import RemoveConfirmation from '$lib/tea-notes/components/RemoveConfirmation.svelte';
 
 	let removableNote: TeaNote | null = null;
 	let isRemoveConfirmationOpened = false
 
-	export let note: EmptyTeaNote = null!;
+	export let note: TeaNote = null!;
 	export let isEmpty = false
 
 	const dispatch = createEventDispatcher();
@@ -80,7 +80,7 @@
 			<Cell span={12}>
 				<hr />
 				<div class="tea-note-form__actions">
-					<Button on:click={() => dispatch('save', {note})} variant="raised">
+					<Button on:click={() => dispatch('save', { note })} variant="raised">
 						<Label>Сохранить</Label>
 					</Button>
 

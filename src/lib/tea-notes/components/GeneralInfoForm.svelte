@@ -3,15 +3,14 @@
 	import Textfield from '@smui/textfield';
 	import Select, { Option } from '@smui/select';
 
-	import type { DeepEmpty } from '$lib/common/types/utility.types';
 	import {
 		TEA_KINDS,
 		TEA_KIND_KEYS,
 		type TeaNoteGeneralInfo
 	} from '$lib/tea-notes/models/general-info.model';
-	import DatePicker from '$lib/common/components/app-bar/DatePicker.svelte';
+	import DatePicker from '$lib/common/components/DatePicker.svelte';
 
-	export let general: DeepEmpty<TeaNoteGeneralInfo> = null!;
+	export let general!: TeaNoteGeneralInfo
 </script>
 
 <InnerGrid>

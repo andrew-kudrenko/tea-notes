@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Cell, InnerGrid } from '@smui/layout-grid';
+
+	import { TASTES, TASTE_KEYS, type TeaNoteInfusion } from '$lib/tea-notes/models/infusion.model';
+	import MeasureRate from '$lib/tea-notes/components/MeasureRate.svelte';
+	import { Label } from '@smui/button';
+	import SegmentedButton, { Segment } from '@smui/segmented-button';
 	import Textfield from '@smui/textfield';
 
-	import type { DeepEmptyOmit } from '$lib/common/types/utility.types';
-	import type { TeaNoteInfusion } from '$lib/tea-notes/models/infusion.model';
-	import MeasureRate from '$lib/tea-notes/components/common/measure-rate.svelte';
-	import SelectTastes from '$lib/tea-notes/components/infusion-form/select-tastes.svelte';
-
-	export let infusion: DeepEmptyOmit<TeaNoteInfusion, 'tastes'> = null!;
+	export let infusion!: TeaNoteInfusion
 </script>
 
 <InnerGrid>
@@ -16,10 +16,9 @@
 			bind:value={infusion.appearance}
 			textarea
 			label="Внешний вид"
-			style="width: 100%;"
 			input$cols={100}
-			input$rows={6}
-			input$resizable={false}
+			input$rows={3}
+			input$resizable={true}
 		/>
 	</Cell>
 
@@ -29,8 +28,8 @@
 			textarea
 			label="Аромат"
 			input$cols={100}
-			input$rows={6}
-			input$resizable={false}
+			input$rows={3}
+			input$resizable={true}
 		/>
 	</Cell>
 
@@ -40,13 +39,19 @@
 			textarea
 			label="Вкус"
 			input$cols={100}
-			input$rows={6}
-			input$resizable={false}
+			input$rows={3}
+			input$resizable={true}
 		/>
 	</Cell>
 
 	<Cell span={6}>
-		<SelectTastes bind:selected={infusion.tastes} />
+		<div class="mdc-typography--subtitle2">Вкусы</div>
+
+		<SegmentedButton segments={TASTE_KEYS} let:segment bind:selected={infusion.tastes}>
+			<Segment {segment}>
+				<Label>{TASTES[segment]}</Label>
+			</Segment>
+		</SegmentedButton>
 	</Cell>
 
 	<Cell span={6}>

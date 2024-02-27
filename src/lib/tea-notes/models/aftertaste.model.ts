@@ -1,12 +1,10 @@
-import type { DeepEmpty } from '$lib/common/types/utility.types';
-
 export interface TeaNoteAftertaste {
-	intensity: number;
-	duration: number;
-	comment: string;
+	intensity: number | null;
+	duration: number | null;
+	comment: string | null;
 }
 
-export const EMPTY_AFTERTASTE: DeepEmpty<TeaNoteAftertaste> = {
+export const EMPTY_AFTERTASTE: TeaNoteAftertaste = {
 	comment: '',
 	duration: null,
 	intensity: null

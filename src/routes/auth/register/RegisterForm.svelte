@@ -87,6 +87,10 @@
                     <Label>Отправить</Label>
                 </Button>
             </Cell>
+
+            <Cell span={12}>
+                <a href="/auth/login">Уже есть аккаунт?</a>
+            </Cell>
         </LayoutGrid>
     </form>
 </Paper>

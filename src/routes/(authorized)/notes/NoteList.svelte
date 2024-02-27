@@ -13,14 +13,11 @@
 	import IconButton from '@smui/icon-button';
 	import Checkbox from '@smui/checkbox'
 	
-	import { METHODS } from '$lib/tea-notes/models/brewing.model';
 	import type { TeaNote } from '$lib/tea-notes/models/tea-note.model';
-	import { TEA_KINDS } from '$lib/tea-notes/models/general-info.model';
-	
+		
 	import RemoveConfirmation from '$lib/tea-notes/components/RemoveConfirmation.svelte';
 
-	import EyeIcon from '$lib/assests/icons/preview.svg?raw'
-	import RemoveIcon from '$lib/assests/icons/delete.svg?raw'
+	import EditIcon from '$lib/assests/icons/edit.svg?raw'
 	
 	export let notes: TeaNote[] = [];
 	
@@ -57,7 +54,7 @@
 		  </Cell>
 		<Cell style="width: 100%;">Название</Cell>
 		<Cell numeric>Дата</Cell>
-		<!-- <Cell></Cell> -->
+		<Cell></Cell>
 	  </Row>
 	</Head>
 	<Body>
@@ -78,11 +75,11 @@
 			</a>
 			</Cell>
 		  <Cell>{item.general.tastingDate}</Cell>
-		  <!-- <Cell>
-			  <IconButton href={`/notes/preview/${item.id}`} data-sveltekit-preload-data="tap">
-				  {@html EyeIcon}
+		  <Cell>
+			  <IconButton href={`/notes/edit/${item.id}`} data-sveltekit-preload-data="tap">
+				  {@html EditIcon}
 			  </IconButton>
-		  </Cell> -->
+		  </Cell>
 		</Row>
 	  {/each}
 	</Body>

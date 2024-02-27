@@ -1,5 +1,3 @@
-import type { DeepEmpty } from '$lib/common/types/utility.types';
-
 export const enum Taste {
 	Sweet = 'sweet',
 	Salty = 'salty',
@@ -23,12 +21,12 @@ export interface TeaNoteInfusion {
 	aroma: string;
 	taste: string;
 	tastes: Taste[];
-	balance: number;
-	bouquet: number;
-	extractivity: number;
-	tartness: number;
-	viscosity: number;
-	density: number;
+	balance: number | null;
+	bouquet: number | null;
+	extractivity: number | null;
+	tartness: number | null;
+	viscosity: number | null;
+	density: number | null;
 }
 
 export const EMPTY_INFUSION = {
@@ -42,4 +40,4 @@ export const EMPTY_INFUSION = {
 	extractivity: null,
 	tartness: null,
 	viscosity: null
-} as const satisfies DeepEmpty<TeaNoteInfusion>;
+} as const satisfies TeaNoteInfusion;

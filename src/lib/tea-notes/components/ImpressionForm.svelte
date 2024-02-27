@@ -2,11 +2,10 @@
 	import { Cell, InnerGrid } from '@smui/layout-grid';
 	import Textfield from '@smui/textfield';
 
-	import type { DeepEmpty } from '$lib/common/types/utility.types';
 	import type { TeaNoteImpression } from '$lib/tea-notes/models/impression.model';
-	import MeasureRate from '$lib/tea-notes/components/common/measure-rate.svelte';
+	import MeasureRate from '$lib/tea-notes/components/MeasureRate.svelte';
 
-	export let impression: DeepEmpty<TeaNoteImpression> = null!;
+	export let impression!: TeaNoteImpression
 </script>
 
 <InnerGrid>
@@ -16,8 +15,8 @@
 			textarea
 			label="Комментарий"
 			input$cols={100}
-			input$rows={6}
-			input$resizable={false}
+			input$rows={3}
+			input$resizable={true}
 		/>
 	</Cell>
 
@@ -27,8 +26,8 @@
 			textarea
 			label="Хорошо сочетается с"
 			input$cols={100}
-			input$rows={6}
-			input$resizable={false}
+			input$rows={3}
+			input$resizable={true}
 		/>
 	</Cell>
 

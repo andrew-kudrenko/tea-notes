@@ -1,6 +1,3 @@
-import type { DeepEmpty } from '$lib/common/types/utility.types';
-import { stringifyDateOnly } from '$lib/common/utils/date.utils';
-
 export const enum TeaKind {
 	Green = 'green',
 	White = 'white',
@@ -13,17 +10,17 @@ export const enum TeaKind {
 }
 
 export interface TeaNoteGeneralInfo {
-	tastingDate: string;
+	tastingDate: string | null;
 	title: string;
-	kind: TeaKind;
+	kind: TeaKind | null;
 	region: string;
 	manufacturer: string;
-	manufacturingYear: number;
-	pricePerGram: number;
+	manufacturingYear: number | null;
+	pricePerGram: number | null;
 }
 
-export const EMPTY_GENERAL_INFO: DeepEmpty<TeaNoteGeneralInfo> = {
-	tastingDate: stringifyDateOnly(new Date()),
+export const EMPTY_GENERAL_INFO: TeaNoteGeneralInfo = {
+	tastingDate: null,
 	title: '',
 	kind: null,
 	manufacturer: '',
