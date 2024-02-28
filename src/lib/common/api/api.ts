@@ -1,8 +1,10 @@
 import ky, { type NormalizedOptions } from 'ky';
 
+import { PUBLIC_API_URL } from '$env/static/public';
+
 import { logout, tryUpdateAuthTokens, attachAuthorizationHeader } from '$lib/common/api/auth.api';
 
-export const API_URL = 'http://localhost:5291/api/';
+export const API_URL = PUBLIC_API_URL;
 
 export const api = ky.create({
 	prefixUrl: API_URL,
